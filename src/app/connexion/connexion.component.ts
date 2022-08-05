@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-connexion',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConnexionComponent implements OnInit {
 
-  constructor() { }
+  loginForm = {
+    pseudo: "",
+    password: ""
+  }
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    console.log(this.authService.getCurrentUtilisateur()!);
+  }
+
+  seConnecter() {
+
+    this.authService.seConnecter(this.loginForm.pseudo, this.loginForm.password).subscribe({
+      next: utilisateur => { this.authService.setCurrentUtilisateur(utilisateur) }
+    })
+
   }
 
 }
