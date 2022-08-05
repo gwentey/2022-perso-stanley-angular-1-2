@@ -17,15 +17,15 @@ export class ConnexionComponent implements OnInit {
   constructor(private authService: AuthService, private _router : Router) { }
 
   ngOnInit(): void {
-
-    console.log(this.authService.getCurrentUtilisateur()!);
   }
 
   seConnecter() {
 
     this.authService.seConnecter(this.loginForm.pseudo, this.loginForm.password).subscribe({
-      next: utilisateur => {
-        this.authService.setCurrentUtilisateur(utilisateur)
+      next: jwt => {
+/*         this.authService.setCurrentUtilisateur(utilisateur)
+
+ */     localStorage.setItem('jwt', JSON.stringify(jwt));
         this._router.navigate([""])
        }
     })

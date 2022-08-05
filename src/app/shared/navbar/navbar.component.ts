@@ -12,7 +12,13 @@ export class NavbarComponent implements OnInit {
   constructor(private modalService: NgbModal, private _authService: AuthService) { }
 
   ngOnInit(): void {
-    console.log(this._authService.connecterOuPas());
+
+    this._authService.getLesAteliers().subscribe({
+      next: ateliers => console.log(ateliers)
+    })
+
+    const userInformation = {...this._authService.getCurrentUtilisateur() }
+    console.log(userInformation)
   }
 
   open(content : any) {

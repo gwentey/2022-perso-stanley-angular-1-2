@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -17,6 +17,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { CatalogueComponent } from './catalogue/catalogue.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { UnloggedGuard } from './shared/guards/unlogged.guard';
+import { JwtInterceptor } from './shared/interceptor/jwt.interceptor';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { UnloggedGuard } from './shared/guards/unlogged.guard';
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthGuard, UnloggedGuard],
+  providers: [AuthGuard, UnloggedGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -34,7 +34,7 @@ export class AuthService {
   }
 
   public connecterOuPas(): boolean {
-    if(localStorage.getItem("user") == null){
+    if(localStorage.getItem("jwt") == null){
       return false
     }
     return true
@@ -48,6 +48,15 @@ export class AuthService {
     localStorage.clear();
     this._router.navigate(["connexion"])
    }
+
+   public getLesAteliers(): Observable<any> {
+
+    return this.http.get<any>("https://localhost:8000/apip/ateliers").pipe(
+      tap(ateliers => console.log(ateliers)),
+      catchError(this.handleError)
+    );
+  }
+
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
