@@ -17,8 +17,8 @@ id="accordionSidebar"
 <hr class="sidebar-divider my-0" />
 
 <!-- Nav Item - Dashboard -->
-<li class="nav-item active">
-  <a class="nav-link" href="index.html">
+<li [routerLink]="['']" class="nav-item" style="cursor: pointer;" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+  <a class="nav-link">
     <i class="fas fa-fw fa-tachometer-alt menu-favicon-titre"></i>
     <span>Panneau de bord</span></a
   >
@@ -28,9 +28,16 @@ id="accordionSidebar"
 <hr class="sidebar-divider" />
 
 <!-- Heading -->
-<div class="sidebar-heading">Interface</div>
+<div class="sidebar-heading">GESTION</div>
 
 <!-- Nav Item - Pages Collapse Menu -->
+<li [routerLink]="['catalogue']" class="nav-item" style="cursor: pointer;" routerLinkActive="active">
+  <a class="nav-link">
+    <i class="fas fa-fw fa-table-list menu-favicon-titre"></i>
+    <span>Catalogue</span></a
+  >
+</li>
+
 <li class="nav-item">
   <a
     style="cursor: pointer"

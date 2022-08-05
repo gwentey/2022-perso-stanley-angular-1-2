@@ -10,6 +10,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { ConnexionComponent } from './connexion/connexion.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { CatalogueComponent } from './catalogue/catalogue.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { FooterComponent } from './shared/footer/footer.component';
     HeaderComponent,
     ConnexionComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    CatalogueComponent
   ],
   imports: [
     BrowserModule,

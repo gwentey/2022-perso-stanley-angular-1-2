@@ -25,3 +25,8 @@ app-header{
   background-position: center;
   background-size: cover;
 }
+
+ngb-modal-backdrop {
+  z-index: 1050 !important;
+}
+
