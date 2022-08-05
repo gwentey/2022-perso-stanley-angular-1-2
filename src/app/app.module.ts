@@ -15,6 +15,8 @@ import { ConnexionComponent } from './connexion/connexion.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { CatalogueComponent } from './catalogue/catalogue.component';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { UnloggedGuard } from './shared/guards/unlogged.guard';
 
 
 @NgModule({
@@ -35,7 +37,7 @@ import { CatalogueComponent } from './catalogue/catalogue.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AuthGuard, UnloggedGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

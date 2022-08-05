@@ -21,12 +21,12 @@
   <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper" style="min-height: 100vh;">
-      <app-header *ngIf="connected"></app-header>
+      <app-header *ngIf="getConnecterOuPas()"></app-header>
       <!-- Content Wrapper -->
       <div id="content-wrapper" class="d-flex flex-column">
         <!-- Main Content -->
         <div id="content">
-          <app-navbar *ngIf="connected"></app-navbar>
+          <app-navbar *ngIf="getConnecterOuPas()"></app-navbar>
           <router-outlet></router-outlet>
         </div>
         <!-- End of Page Wrapper -->

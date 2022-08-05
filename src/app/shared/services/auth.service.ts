@@ -4,6 +4,7 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 import { IUser } from '../interfaces/user';
 
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AuthService {
 
   private readonly API_URL = environment.apiUrl
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private _router : Router) { }
 
 
   public seConnecter(pseudo: string, password : string): Observable<IUser> {
@@ -32,7 +33,7 @@ export class AuthService {
     localStorage.setItem("user", JSON.stringify(user));
   }
 
-  public connecterOuPas(): Boolean {
+  public connecterOuPas(): boolean {
     if(localStorage.getItem("user") == null){
       return false
     }
@@ -45,7 +46,9 @@ export class AuthService {
 
   public seDeconnecter() : void {
     localStorage.clear();
+    this._router.navigate(["connexion"])
    }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
