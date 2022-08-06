@@ -14,8 +14,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getConnecterOuPas(): boolean {
+  // test si l'utilisateur est connecté ou non
+  connecterOuPas() : boolean {
     return this._authService.connecterOuPas()
   }
+
+
 
 }

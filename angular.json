@@ -31,7 +31,8 @@
               "src/styles.scss",
               "src/assets/css/sb-admin-2.css",
               "src/assets/css/sb-admin-2.min.css",
-              "src/assets/css/edit.scss"
+              "src/assets/css/edit.scss",
+              "node_modules/ngx-toastr/toastr.css"
 
 
             ],

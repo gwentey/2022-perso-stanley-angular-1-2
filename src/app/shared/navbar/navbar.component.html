@@ -154,7 +154,7 @@ class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
       ngbDropdownToggle
     >
       <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-        >Douglas McGee</span
+        >{{ utilisateurConnectee.prenom + " " + utilisateurConnectee.nom }}</span
       >
       <img
         class="img-profile rounded-circle"
@@ -204,7 +204,7 @@ class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
       </div>
       <div class="modal-body">
-        <p><strong>Souhaitez-vous vraiment <span class="text-primary">Anthony</span> vous déconnecter?</strong></p>
+        <p><strong>Souhaitez-vous vraiment vous déconnecter <span class="text-primary">Anthony</span> ?</strong></p>
 
       </div>
       <div class="modal-footer">

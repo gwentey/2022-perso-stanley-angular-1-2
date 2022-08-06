@@ -4,7 +4,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,7 +29,8 @@ import { JwtInterceptor } from './shared/interceptor/jwt.interceptor';
     ConnexionComponent,
     NavbarComponent,
     FooterComponent,
-    CatalogueComponent
+    CatalogueComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,10 @@ import { JwtInterceptor } from './shared/interceptor/jwt.interceptor';
     NgbModule,
     FontAwesomeModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
+
   ],
   providers: [AuthGuard, UnloggedGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },],

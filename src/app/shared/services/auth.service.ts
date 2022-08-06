@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, tap, throwError } from 'rxjs';
-import { IUser } from '../interfaces/user';
-
-import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { JwtHelperService } from "@auth0/angular-jwt";
+
+import { IUser } from '../interfaces/user';
+import { environment } from '../../../environments/environment';
+import { isNumber } from '@ng-bootstrap/ng-bootstrap/util/util';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,50 +16,79 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   private readonly API_URL = environment.apiUrl
+  jwtHelper = new JwtHelperService();
+  constructor(private http: HttpClient, private _router: Router, private toastr: ToastrService) { }
 
-  constructor(private http: HttpClient, private _router : Router) { }
-
-
-  public seConnecter(pseudo: string, password : string): Observable<IUser> {
+  // permet de se connecter
+  public seConnecter(pseudo: string, password: string): Observable<any> {
 
     const form = {
-      "username" : pseudo,
-      "password" : password
+      "username": pseudo,
+      "password": password
     };
 
-    return this.http.post<IUser>("https://localhost:8000/apip/security", form).pipe(
-      tap(utilisateur => console.log('Connecté !')),
+    return this.http.post<any>(this.API_URL + "security", form).pipe(
       catchError(this.handleError)
     );
   }
 
-  public setCurrentUtilisateur(user : IUser): void {
-    localStorage.setItem("user", JSON.stringify(user));
+  // obtiens les informations de l'utilisateur connecté en décodant son JWT Token
+  public getCurrentUtilisateur(): IUser {
+    const token = localStorage.getItem("jwt")
+
+    var decodToken = this.jwtHelper.decodeToken(token!);
+
+    return {
+      id: decodToken.id,
+      nom: decodToken.nom,
+      prenom: decodToken.prenom,
+      roles: decodToken.roles,
+      username: decodToken.username
+      }
   }
 
+
+  // indique si l'utilisateur est connecté ou non grace à son JWT Token
   public connecterOuPas(): boolean {
-    if(localStorage.getItem("jwt") == null){
+    const token = localStorage.getItem("jwt")
+
+    if (!token || token === "") {
+      localStorage.removeItem("jwt");
       return false
     }
-    return true
+    const parts = token.split(".");
+    if (parts.length !== 3) {
+      localStorage.removeItem("jwt");
+      this._router.navigate(["connexion"])
+      return false
+    }
+
+    if(this.jwtHelper.isTokenExpired(token!)){
+      localStorage.removeItem("jwt");
+      this.toastr.error('Par sécurité après 8h de connexion votre session se ferme automatiquement', "Déconnecté",
+      {timeOut: 10000})
+      this._router.navigate(["connexion"])
+      return false
+    }
+
+
+    return !this.jwtHelper.isTokenExpired(token!)
   }
 
-  public getCurrentUtilisateur() : IUser {
-   return JSON.parse(localStorage.getItem("user")!);
-  }
-
-  public seDeconnecter() : void {
-    localStorage.clear();
+  // supprime le JWT Token et redirige l'utilisateur vers la page de connexion
+  public seDeconnecter(): void {
+    localStorage.removeItem("jwt");
     this._router.navigate(["connexion"])
-   }
-
-   public getLesAteliers(): Observable<any> {
-
-    return this.http.get<any>("https://localhost:8000/apip/ateliers").pipe(
-      tap(ateliers => console.log(ateliers)),
-      catchError(this.handleError)
-    );
   }
+
+  /*
+    public getLesAteliers(): Observable<any> {
+
+      return this.http.get<any>("https://localhost:8000/apip/ateliers").pipe(
+        tap(ateliers => console.log(ateliers)),
+        catchError(this.handleError)
+      );
+    } */
 
 
   private handleError(error: HttpErrorResponse) {

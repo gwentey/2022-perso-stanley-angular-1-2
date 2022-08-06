@@ -7,9 +7,10 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { UnloggedGuard } from './shared/guards/unlogged.guard';
 
 const routes: Routes = [
-  { path: '', component: AccueilComponent, canActivate: [AuthGuard]  },
   { path: 'connexion', component: ConnexionComponent, canActivate: [UnloggedGuard] },
-  { path: 'catalogue', component: CatalogueComponent, canActivate: [AuthGuard] }
+  { path: 'catalogue', component: CatalogueComponent, canActivate: [AuthGuard] },
+  { path: '', component: AccueilComponent, canActivate: [AuthGuard]  },
+  { path: "**", component: ConnexionComponent, canActivate: [UnloggedGuard] }
 
 ];
 
