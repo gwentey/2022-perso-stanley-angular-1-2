@@ -18,19 +18,23 @@ export class ConnexionComponent implements OnInit {
   constructor(private authService: AuthService, private _router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
+
+
   }
 
   seConnecter() {
 
     this.authService.seConnecter(this.pseudo, this.password).subscribe({
       next: jwt => {
-        this.toastr.success('Connecté', '', {timeOut: 1500})
+        this.toastr.success('Connecté', '', { timeOut: 1500 })
         var jwtFormat = jwt!.token
         localStorage.setItem('jwt', jwtFormat);
+        console.log("fonctionne")
         this._router.navigate([""])
       },
       error: () => {
         this.toastr.error('Identifiants erronés!')
+        console.log("erreur connection")
 
         // reset form
         this.pseudo = ""

@@ -3,11 +3,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { ToastrService } from 'ngx-toastr';
+
 
 import { IUser } from '../interfaces/user';
 import { environment } from '../../../environments/environment';
-import { isNumber } from '@ng-bootstrap/ng-bootstrap/util/util';
-import { ToastrService } from 'ngx-toastr';
 
 
 @Injectable({
@@ -31,6 +31,7 @@ export class AuthService {
       catchError(this.handleError)
     );
   }
+
 
   // obtiens les informations de l'utilisateur connecté en décodant son JWT Token
   public getCurrentUtilisateur(): IUser {
@@ -77,18 +78,12 @@ export class AuthService {
 
   // supprime le JWT Token et redirige l'utilisateur vers la page de connexion
   public seDeconnecter(): void {
+    this.toastr.error("Déconnecté")
     localStorage.removeItem("jwt");
     this._router.navigate(["connexion"])
   }
 
-  /*
-    public getLesAteliers(): Observable<any> {
 
-      return this.http.get<any>("https://localhost:8000/apip/ateliers").pipe(
-        tap(ateliers => console.log(ateliers)),
-        catchError(this.handleError)
-      );
-    } */
 
 
   private handleError(error: HttpErrorResponse) {

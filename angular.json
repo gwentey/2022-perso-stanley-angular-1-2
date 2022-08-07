@@ -25,22 +25,24 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/assets/traduction_table.json"
             ],
             "styles": [
               "src/styles.scss",
               "src/assets/css/sb-admin-2.css",
               "src/assets/css/sb-admin-2.min.css",
               "src/assets/css/edit.scss",
-              "node_modules/ngx-toastr/toastr.css"
-
-
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "src/assets/js/sb-admin-2.js",
               "src/assets/js/sb-admin-2.min.js",
-              "src/assets/js/bootstrap.js"
+              "src/assets/js/bootstrap.js",
+              "node_modules/datatables.net/js/jquery.dataTables.min.js",
+              "node_modules/datatables.net-bs5/js/dataTables.bootstrap5.min.js"
             ]
           },
           "configurations": {

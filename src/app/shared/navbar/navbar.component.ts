@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IUser } from '../interfaces/user';
 import { AuthService } from '../services/auth.service';
 
@@ -16,7 +16,9 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     this.utilisateurConnectee = this._authService.getCurrentUtilisateur()
+
 
   }
 

@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { DataTablesModule } from "angular-datatables";
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,7 +19,9 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { CatalogueComponent } from './catalogue/catalogue.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { UnloggedGuard } from './shared/guards/unlogged.guard';
-import { JwtInterceptor } from './shared/interceptor/jwt.interceptor';
+import { NouvelleProductionComponent } from './nouvelle-production/nouvelle-production.component';
+import { TokenInterceptorService } from './shared/interceptor/token-interceptor.service';
+
 
 
 @NgModule({
@@ -30,6 +33,7 @@ import { JwtInterceptor } from './shared/interceptor/jwt.interceptor';
     NavbarComponent,
     FooterComponent,
     CatalogueComponent,
+    NouvelleProductionComponent,
 
   ],
   imports: [
@@ -40,11 +44,12 @@ import { JwtInterceptor } from './shared/interceptor/jwt.interceptor';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    DataTablesModule
 
   ],
   providers: [AuthGuard, UnloggedGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },],
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

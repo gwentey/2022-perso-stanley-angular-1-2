@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 
-
 declare var $: any;
 declare function sbadmin(): any;
 
@@ -11,8 +10,6 @@ declare function sbadmin(): any;
   styleUrls: ['./accueil.component.scss']
 })
 export class AccueilComponent implements OnInit, AfterViewInit {
-
-
 
   constructor() { }
   chart: any;
@@ -24,6 +21,7 @@ export class AccueilComponent implements OnInit, AfterViewInit {
     this.chart = document.getElementById("myChart")
     Chart.register(...registerables);
     this.loadChart();
+
 
   }
 

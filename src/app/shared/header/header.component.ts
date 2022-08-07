@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   chart: any;
 
   ngOnInit(): void {
+
   }
 
   ngAfterViewInit(): void {

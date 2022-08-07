@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
   constructor(private _authService: AuthService){}
 
   ngOnInit(): void {
+
   }
 
   // test si l'utilisateur est connecté ou non
