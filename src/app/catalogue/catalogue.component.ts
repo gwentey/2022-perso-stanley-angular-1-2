@@ -12,10 +12,10 @@ import { ProduitService } from '../shared/services/produit.service';
 })
 export class CatalogueComponent implements OnInit, OnDestroy {
 
-  dtOptions: DataTables.Settings = {}
   langueFR = traductionTableFrancais
-  lesProduits : IProduit[] = []
 
+  dtOptions: DataTables.Settings = {}
+  lesProduits: IProduit[] = []
   dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(private _produitService: ProduitService) { }
@@ -36,7 +36,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
     this._produitService.getAllProduit().subscribe(data => {
       this.lesProduits = data;
       // Calling the DT trigger to manually render the table
-      this.dtTrigger.next(this.lesProduits);
+      this.dtTrigger.next(this.dtOptions);
     });
   }
 
