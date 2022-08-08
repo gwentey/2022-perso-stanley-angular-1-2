@@ -1,13 +1,18 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
   <!-- Page Heading -->
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <div class="d-sm-flex align-items-center mb-4 row">
+    <div class="col-4">
     <h1 class="h3 mb-0 text-gray-800">Catalogue</h1>
-    <a
-      href="#"
-      class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-      ><i class="fas fa-download fa-sm text-white-50"> </i> Generate Report</a
-    >
+    </div>
+    <div class="col-5"></div>
+    <div class="col-3 d-flex justify-content-end">
+      <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm me-3"
+      ><i class="fas fa-cart-shopping fa-sm text-white-50 me-1"> </i> Vente</a>
+      <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+      ><i class="fas fa-utensils fa-sm text-white-50 me-1"> </i> Production</a>
+      </div>
+
   </div>
 
   <!-- Content Row -->
@@ -34,18 +39,29 @@
               <th>Stock</th>
               <th>Prix</th>
               <th>Atelier</th>
+              <th>DLC</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let produit of lesProduits">
-              <td>{{ produit.nom }}</td>
-              <td>System Architect</td>
-              <td>Edinburgh</td>
-              <td>61</td>
-              <td>2011/04/25</td>
-              <td>$320,800</td>
-            </tr>
+            <tr *ngFor="let production of lesProductions">
+              <td>{{ production.produit.famille.nom }}</td>
+              <td>{{ production.produit.nom }}</td>
+              <td>{{ production.conditionnement }}</td>
+              <td>{{ production.quantite }}</td>
+              <td>{{ production.prixParPortion }}</td>
+              <td>{{ production.atelier.nom }}</td>
+              <td>{{ production.dateFabrication | date }}</td>
+              <td><i class="fas fa-pencil fa-2x text-gray-400 clickable"></i></td>
+              <td><i class="fas fa-trash-can fa-2x text-gray-400 clickable"></i></td>
+              <td><i class="fas fa-dolly fa-2x text-gray-400 clickable"></i></td>
+              <td><a class="clickable"><img style="width: 32px;" src="../../assets/img/flocon.png"></a></td>
 
+            </tr>
 
           </tbody>
         </table>

@@ -9,15 +9,24 @@ import { AuthService } from './shared/services/auth.service';
 export class AppComponent implements OnInit {
   title = 'stanley';
 
-  constructor(private _authService: AuthService){}
+  constructor(private _authService: AuthService) { }
 
   ngOnInit(): void {
 
   }
 
   // test si l'utilisateur est connecté ou non
-  connecterOuPas() : boolean {
+  connecterOuPas(): boolean {
     return this._authService.connecterOuPas()
+  }
+
+  scrollTop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+
   }
 
 

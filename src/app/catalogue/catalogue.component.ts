@@ -2,7 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import * as traductionTableFrancais from '../../assets/traduction_table.json';
-import { IProduit } from '../shared/interfaces/produit';
+import { IProduction } from '../shared/interfaces/production';
+import { ProductionService } from '../shared/services/production.service';
 import { ProduitService } from '../shared/services/produit.service';
 
 @Component({
@@ -15,26 +16,31 @@ export class CatalogueComponent implements OnInit, OnDestroy {
   langueFR = traductionTableFrancais
 
   dtOptions: DataTables.Settings = {}
-  lesProduits: IProduit[] = []
+  lesProductions: IProduction[] = []
   dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private _produitService: ProduitService) { }
+  constructor(private _productionService: ProductionService) { }
 
   ngOnInit(): void {
     this.initialisationTable()
 
     this.dtOptions = {
+      dom: "<'row catalogue'<'col-sm-12 col-md-10'f><'col-sm-12 col-md-2 text-right'l>>" +
+      "<'row'<'col-sm-12'tr>>" +
+      "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
       pageLength: 10,
       processing: true,
       language: this.langueFR,
       lengthMenu: [10, 20, 30, 40],
+
     }
 
   }
 
   initialisationTable() {
-    this._produitService.getAllProduit().subscribe(data => {
-      this.lesProduits = data;
+    this._productionService.getAllProduction().subscribe(data => {
+      this.lesProductions = data;
+      console.log(this.lesProductions)
       // Calling the DT trigger to manually render the table
       this.dtTrigger.next(this.dtOptions);
     });

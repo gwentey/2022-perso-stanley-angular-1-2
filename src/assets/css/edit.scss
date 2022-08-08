@@ -30,3 +30,14 @@ ngb-modal-backdrop {
   z-index: 1050 !important;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
+
+.catalogue .dataTables_filter label {
+  width: 100%!important;
+}
+.catalogue .dataTables_filter label input {
+  width: 91%!important;
+}
