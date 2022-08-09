@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
 
   public utilisateurConnectee !: IUser
 
-  constructor(private modalService: NgbModal, private _authService: AuthService) { }
+  constructor(private _modalService: NgbModal, private _authService: AuthService) { }
 
   ngOnInit(): void {
 
@@ -23,7 +23,7 @@ export class NavbarComponent implements OnInit {
   }
 
   open(content: any) {
-    this.modalService.open(content)
+    this._modalService.open(content)
   }
 
   seDeconnecter(): void {

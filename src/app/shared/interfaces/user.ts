@@ -4,4 +4,5 @@ export interface IUser {
   prenom: string
   roles: any
   username: string
+  profile: string
 }

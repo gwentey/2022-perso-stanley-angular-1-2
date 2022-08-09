@@ -44,7 +44,8 @@ export class AuthService {
       nom: decodToken.nom,
       prenom: decodToken.prenom,
       roles: decodToken.roles,
-      username: decodToken.username
+      username: decodToken.username,
+      profile: decodToken.profile
       }
   }
 

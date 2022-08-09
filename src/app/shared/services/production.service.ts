@@ -23,6 +23,11 @@ export class ProductionService {
       );
     }
 
+    public congelationDecongelation(production: IProduction) {
+
+
+    }
+
 
 
 

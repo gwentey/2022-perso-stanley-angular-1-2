@@ -49,17 +49,20 @@
           </thead>
           <tbody>
             <tr *ngFor="let production of lesProductions">
+
               <td>{{ production.produit.famille.nom }}</td>
               <td>{{ production.produit.nom }}</td>
               <td>{{ production.conditionnement }}</td>
               <td>{{ production.quantite }}</td>
               <td>{{ production.prixParPortion }}</td>
               <td>{{ production.atelier.nom }}</td>
-              <td>{{ production.dateFabrication | date }}</td>
+              <td style="text-align: center;"
+              [ngClass]="{'table-danger': calculerDLC(production.datePeremption) < 0, 'table-warning' : calculerDLC(production.datePeremption) == 0, 'table-success' : calculerDLC(production.datePeremption) > 0 }">
+              {{ calculerDLC(production.datePeremption) }}</td>
               <td><i class="fas fa-pencil fa-2x text-gray-400 clickable"></i></td>
               <td><i class="fas fa-trash-can fa-2x text-gray-400 clickable"></i></td>
               <td><i class="fas fa-dolly fa-2x text-gray-400 clickable"></i></td>
-              <td><a class="clickable"><img style="width: 32px;" src="../../assets/img/flocon.png"></a></td>
+              <td><a *ngIf="production.congelation == true" class="clickable"><img style="width: 32px;" src="../../assets/img/flocon.png"></a></td>
 
             </tr>
 

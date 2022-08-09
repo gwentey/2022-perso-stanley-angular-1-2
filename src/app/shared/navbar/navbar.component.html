@@ -89,7 +89,7 @@ class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
       aria-labelledby="alertsDropdown"
     >
 
-      <h6 class="dropdown-header">Alerts Center</h6>
+      <h6 class="dropdown-header">Notifications</h6>
       <a
         ngbDropdownItem
         class="dropdown-item d-flex align-items-center clickable"
@@ -162,17 +162,17 @@ class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
       class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
       aria-labelledby="userDropdown" ngbDropdownMenu
     >
-      <a ngbDropdownItem class="dropdown-item clickable">
+      <a ngbDropdownItem [routerLink]="['profile']" class="dropdown-item clickable">
         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
         Profile
       </a>
-      <a ngbDropdownItem class="dropdown-item clickable">
+      <a ngbDropdownItem [routerLink]="['reglages']" class="dropdown-item clickable">
         <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-        Settings
+        Réglages
       </a>
-      <a ngbDropdownItem class="dropdown-item clickable">
+      <a ngbDropdownItem [routerLink]="['historiques']" class="dropdown-item clickable">
         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-        Activity Log
+        Historiques
       </a>
       <div class="dropdown-divider"></div>
       <a
@@ -184,7 +184,7 @@ class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
         <i
           class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
         ></i>
-        Logout
+        Deconnexion
       </a>
     </div>
   </li>

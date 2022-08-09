@@ -15,7 +15,6 @@ export interface IProduction {
   classe: IClasse
   produit: IProduit
   prixParPortion: number
-
-
+  congelation: boolean
 
 }
