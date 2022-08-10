@@ -46,7 +46,7 @@ export class AuthService {
       roles: decodToken.roles,
       username: decodToken.username,
       profile: decodToken.profile
-      }
+    }
   }
 
 
@@ -65,10 +65,10 @@ export class AuthService {
       return false
     }
 
-    if(this.jwtHelper.isTokenExpired(token!)){
+    if (this.jwtHelper.isTokenExpired(token!)) {
       localStorage.removeItem("jwt");
       this.toastr.error('Par sécurité après 8h de connexion votre session se ferme automatiquement', "Déconnecté",
-      {timeOut: 10000})
+        { timeOut: 10000 })
       this._router.navigate(["connexion"])
       return false
     }
@@ -85,6 +85,16 @@ export class AuthService {
   }
 
 
+  public changePassword(password: string) {
+
+    var body = {
+      "password" : password
+    }
+
+    return this.http.put<any>(this.API_URL + "me/changepassword", body).pipe(
+      catchError(this.handleError)
+    )
+  }
 
 
   private handleError(error: HttpErrorResponse) {

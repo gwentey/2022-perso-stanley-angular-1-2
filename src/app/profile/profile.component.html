@@ -16,11 +16,12 @@
           <h6 class="m-0 font-weight-bold text-primary">Profile</h6>
         </div>
         <div class="col-5 d-flex justify-content-end">
-
-            <a (click)="open(validationChangement)"
+          <a
+            (click)="open(validationChangement)"
             class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-            ><i class="fas fa-check fa-sm text-white-50 me-1"> </i>
-            Mettre à jour</a>
+            ><i class="fas fa-check fa-sm text-white-50 me-1"> </i> Mettre à
+            jour</a
+          >
         </div>
       </div>
     </div>
@@ -32,17 +33,23 @@
             src="../../assets/img/profile/{{ profile }}.png"
             width="90"
           /><span class="font-weight-bold mt-1">Anthony Rodrigues</span>
-          <a (click)="open(changePassword)"
-          class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mt-3"
-          ><i class="fas fa-key fa-sm text-white-50 me-1"> </i>
-          Changer de mot de passe</a>
+          <a
+            (click)="open(changePassword)"
+            class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mt-3"
+            ><i class="fas fa-key fa-sm text-white-50 me-1"> </i> Changer de mot
+            de passe</a
+          >
         </div>
-
       </div>
       <div class="col-3 py-3 border-right border-left">
         <div class="col-sm-12 mb-2">
           <label for="prenom" class="form-label">Prénom</label>
-          <input [(ngModel)]="prenom" type="text" class="form-control" id="prenom" />
+          <input
+            [(ngModel)]="prenom"
+            type="text"
+            class="form-control"
+            id="prenom"
+          />
         </div>
         <div class="col-sm-12 mb-2">
           <label for="nom" class="form-label">Nom</label>
@@ -50,26 +57,30 @@
         </div>
         <div class="col-sm-12">
           <label for="username" class="form-label">Pseudo</label>
-          <input [(ngModel)]="username" type="text" class="form-control" id="username" />
+          <input
+            [(ngModel)]="username"
+            type="text"
+            class="form-control"
+            id="username"
+          />
         </div>
       </div>
       <div class="col d-flex justify-content-center align-items-center">
-          <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 m-1">
-            <div class="col" *ngFor="let profile of lesProfiles">
-              <div
-                class="d-flex align-items-center justify-content-center profile-choix"
-                style="border-radius: 50%; width: 100px; height: 100px"
-              >
-                <img
-                  class="rounded-circle"
-                  alt=""
-                  width="90%"
-                  src="../../assets/img/profile/{{ profile }}.png"
-                />
-              </div>
+        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 m-1">
+          <div class="col" *ngFor="let profile of lesProfiles">
+            <div
+              class="d-flex align-items-center justify-content-center profile-choix"
+              style="border-radius: 50%; width: 100px; height: 100px"
+            >
+              <img
+                class="rounded-circle"
+                alt=""
+                width="90%"
+                src="../../assets/img/profile/{{ profile }}.png"
+              />
             </div>
           </div>
-
+        </div>
       </div>
     </div>
   </div>
@@ -77,48 +88,111 @@
 <!-- /.container-fluid -->
 
 <!-- Changer votre mot de passe -->
-<!-- Modification du profil -->
 <ng-template #changePassword let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Modification du profil</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-  </div>
-  <div class="modal-body">
-    <p><strong>Vous devez confirmer votre mot de passe <span class="text-primary">Anthony</span> !</strong></p>
-
-    <form>
+  <form (ngSubmit)="changerDeMotDePasseSend()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">
+        Changer votre mot de passe
+      </h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
       <div class="mb-3">
         <label for="password">Mot de passe</label>
         <div class="input-group">
-          <input type="password" id="password" class="form-control" placeholder="******" name="password">
+          <input
+            type="password"
+            id="password"
+            class="form-control {{ classe }}"
+            [(ngModel)]="newPassword"
+            (ngModelChange)="checkPassword()"
+            placeholder="******"
+            name="password"
+          />
+          <div class="invalid-feedback">
+            <p *ngFor="let msg of messageNewPassword">{{ msg }}</p>
+          </div>
+          <div class="valid-feedback"></div>
         </div>
       </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-success" (click)="modal.close('Save click')">Valider</button>
-  </div>
+      <div class="mb-3">
+        <label for="passwordConfirm">Confirmer le mot de passe</label>
+        <div class="input-group">
+          <input
+            type="password"
+            id="passwordConfirm"
+            class="form-control {{ classeConfirm }}"
+            [(ngModel)]="confirmationPassword"
+            (ngModelChange)="confirmPassword()"
+            placeholder="******"
+            name="passwordConfirm"
+          />
+          <div class="invalid-feedback">
+            <p>{{ messageConfirmation }}</p>
+          </div>
+          <div class="valid-feedback"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="submit"
+        class="btn btn-success"
+        [ngClass]="{ disabled: changerMotDePasse == false }"
+        (click)="modal.close('Save click')"
+      >
+        Valider
+      </button>
+    </div>
+  </form>
 </ng-template>
 
 <!-- Modification du profil -->
 <ng-template #validationChangement let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Modification du profil</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
   </div>
   <div class="modal-body">
-    <p><strong>Vous devez confirmer votre mot de passe <span class="text-primary">Anthony</span> !</strong></p>
+    <p>
+      <strong
+        >Vous devez confirmer votre mot de passe
+        <span class="text-primary">Anthony</span> !</strong
+      >
+    </p>
 
     <form>
       <div class="mb-3">
         <label for="password">Mot de passe</label>
         <div class="input-group">
-          <input type="password" id="password" class="form-control" placeholder="******" name="password">
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            placeholder="******"
+            name="password"
+          />
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-success" (click)="modal.close('Save click')">Valider</button>
+    <button
+      type="button"
+      class="btn btn-success"
+      (click)="modal.close('Save click')"
+    >
+      Valider
+    </button>
   </div>
 </ng-template>
