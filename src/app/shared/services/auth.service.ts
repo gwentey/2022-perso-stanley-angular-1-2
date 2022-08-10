@@ -32,7 +32,6 @@ export class AuthService {
     );
   }
 
-
   // obtiens les informations de l'utilisateur connecté en décodant son JWT Token
   public getCurrentUtilisateur(): IUser {
     const token = localStorage.getItem("jwt")
@@ -84,7 +83,21 @@ export class AuthService {
     this._router.navigate(["connexion"])
   }
 
+  // met a jour le profil utilisateur
+  public majUser(user : IUser){
+    var body = {
+      "nom": user.nom,
+      "prenom": user.prenom,
+      "profile": user.profile,
+      "username": user.username
+    }
 
+    return this.http.put<any>(this.API_URL + "me/majuser", body).pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  // permet de changer le mot de passe
   public changePassword(password: string) {
 
     var body = {

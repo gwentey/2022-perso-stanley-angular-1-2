@@ -32,7 +32,7 @@
             class="rounded-circle"
             src="../../assets/img/profile/{{ profile }}.png"
             width="90"
-          /><span class="font-weight-bold mt-1">Anthony Rodrigues</span>
+          /><span class="font-weight-bold mt-1">{{ currentUser.prenom + " " + currentUser.nom}}</span>
           <a
             (click)="open(changePassword)"
             class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mt-3"
@@ -67,8 +67,9 @@
       </div>
       <div class="col d-flex justify-content-center align-items-center">
         <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 m-1">
-          <div class="col" *ngFor="let profile of lesProfiles">
-            <div
+          <div class="col" *ngFor="let prof of lesProfiles">
+            <div (click)="changerProfil(prof)"
+              [ngClass]="{ 'current-profile': profile == prof }"
               class="d-flex align-items-center justify-content-center profile-choix"
               style="border-radius: 50%; width: 100px; height: 100px"
             >
@@ -76,7 +77,7 @@
                 class="rounded-circle"
                 alt=""
                 width="90%"
-                src="../../assets/img/profile/{{ profile }}.png"
+                src="../../assets/img/profile/{{ prof }}.png"
               />
             </div>
           </div>
@@ -167,7 +168,7 @@
     <p>
       <strong
         >Vous devez confirmer votre mot de passe
-        <span class="text-primary">Anthony</span> !</strong
+        <span class="text-primary">{{ currentUser.prenom }}</span> !</strong
       >
     </p>
 
@@ -190,7 +191,7 @@
     <button
       type="button"
       class="btn btn-success"
-      (click)="modal.close('Save click')"
+      (click)="majUser()"
     >
       Valider
     </button>

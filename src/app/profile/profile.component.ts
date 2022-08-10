@@ -53,6 +53,32 @@ export class ProfileComponent implements OnInit {
     this._modalService.open(content)
   }
 
+  changerProfil(numberProfile : string) {
+    this.profile = numberProfile
+  }
+
+  majUser() {
+
+    // on reconstruit l'objet
+    var user : IUser = {
+      prenom: this.prenom,
+      nom: this.nom,
+      username: this.username,
+      profile: this.profile,
+      id: 0,
+      roles: []
+    }
+
+    this._authService.majUser(user).subscribe({
+      next: () => {
+        this.toastr.success('Compte mis à jour', '')
+      },
+      error: () =>
+        this.toastr.error('Une erreur est survenue', '')
+    })
+
+  }
+
   changerDeMotDePasseSend() {
 
     if (this.erreurCaractere == false && this.erreurTaille == false) {
