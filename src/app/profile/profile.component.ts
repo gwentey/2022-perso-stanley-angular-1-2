@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { IUser } from '../shared/interfaces/user';
 import { AuthService } from '../shared/services/auth.service';
+import { NavbarService } from '../shared/services/navbar.service';
 
 
 
@@ -15,12 +16,15 @@ import { AuthService } from '../shared/services/auth.service';
 })
 export class ProfileComponent implements OnInit {
 
+  @Output() newCurrentUser: EventEmitter<string> = new EventEmitter();
+
   lesProfiles: string[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
   prenom !: string
   nom !: string
   username !: string
   currentUser !: IUser
   profile !: string
+  motDePasseConfirmeMajProfil !: string
 
   newPassword !: string
   messageNewPassword: string[] = []
@@ -38,7 +42,7 @@ export class ProfileComponent implements OnInit {
 
 
   constructor(private _authService: AuthService, private _modalService: NgbModal, private fb: FormBuilder,
-    private toastr: ToastrService, private _router : Router) { }
+    private toastr: ToastrService, private _router: Router, private _navbarService: NavbarService) { }
 
   ngOnInit(): void {
     this.currentUser = this._authService.getCurrentUtilisateur()
@@ -53,29 +57,50 @@ export class ProfileComponent implements OnInit {
     this._modalService.open(content)
   }
 
-  changerProfil(numberProfile : string) {
+  changerProfil(numberProfile: string) {
     this.profile = numberProfile
   }
 
+  newCurrentUserSignal(): void {
+    this._navbarService.send();
+  }
+
   majUser() {
-
-    // on reconstruit l'objet
-    var user : IUser = {
-      prenom: this.prenom,
-      nom: this.nom,
-      username: this.username,
-      profile: this.profile,
-      id: 0,
-      roles: []
-    }
-
-    this._authService.majUser(user).subscribe({
+    // on verifie le mot de passe
+    this._authService.seConnecter(this.currentUser.username, this.motDePasseConfirmeMajProfil).subscribe({
       next: () => {
-        this.toastr.success('Compte mis à jour', '')
+
+        // on reconstruit l'objet
+        var user: IUser = {
+          prenom: this.prenom,
+          nom: this.nom,
+          username: this.username,
+          profile: this.profile,
+          id: 0,
+          roles: []
+        }
+
+        this._authService.majUser(user).subscribe({
+          next: () => {
+            // changement du token sur la session
+            this._authService.seConnecter(this.currentUser.username, this.motDePasseConfirmeMajProfil).subscribe({
+              next: jwt => {
+                var jwtFormat = jwt!.token
+                localStorage.setItem('jwt', jwtFormat);
+                this.newCurrentUserSignal()
+                this.toastr.success('Compte mis à jour', '')
+              },
+            })
+          },
+          error: () =>
+            this.toastr.error('Une erreur est survenue', '')
+        })
       },
-      error: () =>
-        this.toastr.error('Une erreur est survenue', '')
+      error: () => {
+        this.toastr.error('Mot de passe erroné')
+      }
     })
+
 
   }
 
@@ -100,7 +125,7 @@ export class ProfileComponent implements OnInit {
     // rechargement de la page
     this._router.navigateByUrl('', { skipLocationChange: true }).then(() => {
       this._router.navigate(['profile']);
-  });
+    });
 
   }
 

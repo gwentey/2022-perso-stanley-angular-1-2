@@ -12,7 +12,7 @@ import { UnloggedGuard } from './shared/guards/unlogged.guard';
 const routes: Routes = [
   { path: 'connexion', component: ConnexionComponent, canActivate: [UnloggedGuard] },
   { path: 'catalogue', component: CatalogueComponent, canActivate: [AuthGuard] },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'profil', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'reglages', component: ReglagesComponent, canActivate: [AuthGuard] },
   { path: 'historiques', component: HistoriquesComponent, canActivate: [AuthGuard] },
 

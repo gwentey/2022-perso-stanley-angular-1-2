@@ -3,7 +3,7 @@
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center mb-4 row">
     <div class="col-4">
-      <h1 class="h3 mb-0 text-gray-800">Profile</h1>
+      <h1 class="h3 mb-0 text-gray-800">Profil</h1>
     </div>
     <div class="col-5"></div>
   </div>
@@ -13,7 +13,7 @@
     <div class="card-header">
       <div class="row">
         <div class="col-7 d-flex align-items-center">
-          <h6 class="m-0 font-weight-bold text-primary">Profile</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Profil</h6>
         </div>
         <div class="col-5 d-flex justify-content-end">
           <a
@@ -32,7 +32,7 @@
             class="rounded-circle"
             src="../../assets/img/profile/{{ profile }}.png"
             width="90"
-          /><span class="font-weight-bold mt-1">{{ currentUser.prenom + " " + currentUser.nom}}</span>
+          /><span class="font-weight-bold mt-1">{{ prenom + " " + nom}}</span>
           <a
             (click)="open(changePassword)"
             class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mt-3"
@@ -45,6 +45,7 @@
         <div class="col-sm-12 mb-2">
           <label for="prenom" class="form-label">Prénom</label>
           <input
+            [maxlength]="13"
             [(ngModel)]="prenom"
             type="text"
             class="form-control"
@@ -53,11 +54,12 @@
         </div>
         <div class="col-sm-12 mb-2">
           <label for="nom" class="form-label">Nom</label>
-          <input [(ngModel)]="nom" type="text" class="form-control" id="nom" />
+          <input [(ngModel)]="nom" type="text" class="form-control" id="nom" [maxlength]="13"/>
         </div>
         <div class="col-sm-12">
           <label for="username" class="form-label">Pseudo</label>
           <input
+            [maxlength]="14"
             [(ngModel)]="username"
             type="text"
             class="form-control"
@@ -155,6 +157,8 @@
 
 <!-- Modification du profil -->
 <ng-template #validationChangement let-modal>
+  <form (ngSubmit)="majUser(); modal.close()">
+
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Modification du profil</h4>
     <button
@@ -172,11 +176,11 @@
       >
     </p>
 
-    <form>
       <div class="mb-3">
         <label for="password">Mot de passe</label>
         <div class="input-group">
           <input
+          [(ngModel)]="motDePasseConfirmeMajProfil"
             type="password"
             id="password"
             class="form-control"
@@ -185,15 +189,15 @@
           />
         </div>
       </div>
-    </form>
   </div>
   <div class="modal-footer">
     <button
-      type="button"
+      type="submit"
       class="btn btn-success"
-      (click)="majUser()"
     >
       Valider
     </button>
   </div>
+</form>
+
 </ng-template>

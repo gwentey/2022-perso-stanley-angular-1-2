@@ -154,7 +154,7 @@ class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
       >
       <img
         class="img-profile rounded-circle"
-        src="https://cdn2.iconfinder.com/data/icons/avatars-60/5985/40-School_boy-256.png"
+        src="assets/img/profile/{{ utilisateurConnectee.profile }}.png"
       />
     </a>
     <!-- Dropdown - User Information -->
@@ -162,9 +162,9 @@ class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
       class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
       aria-labelledby="userDropdown" ngbDropdownMenu
     >
-      <a ngbDropdownItem [routerLink]="['profile']" class="dropdown-item clickable">
+      <a ngbDropdownItem [routerLink]="['profil']" class="dropdown-item clickable">
         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-        Profile
+        Profil
       </a>
       <a ngbDropdownItem [routerLink]="['reglages']" class="dropdown-item clickable">
         <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -199,7 +199,7 @@ class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
       </div>
       <div class="modal-body">
-        <p><strong>Souhaitez-vous vraiment vous déconnecter <span class="text-primary">Anthony</span> ?</strong></p>
+        <p><strong>Souhaitez-vous vraiment vous déconnecter <span class="text-primary">{{ utilisateurConnectee.prenom }}</span> ?</strong></p>
 
       </div>
       <div class="modal-footer">
