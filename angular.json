@@ -34,7 +34,9 @@
               "src/assets/css/sb-admin-2.min.css",
               "src/assets/css/edit.scss",
               "node_modules/ngx-toastr/toastr.css",
-              "node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css"
+              "node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css",
+              "src/assets/css/test.scss"
+
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",

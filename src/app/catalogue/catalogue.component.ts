@@ -1,8 +1,9 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
 import * as traductionTableFrancais from '../../assets/traduction_table.json';
+import { NouvelleProductionComponent } from '../nouvelle-production/nouvelle-production.component';
 import { IProduction } from '../shared/interfaces/production';
 import { ProductionService } from '../shared/services/production.service';
 
@@ -21,7 +22,8 @@ export class CatalogueComponent implements OnInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject<any>();
   sub : any;
 
-  constructor(private _productionService: ProductionService, private _datePipe: DatePipe) { }
+  constructor(private _productionService: ProductionService, private modalService: NgbModal
+    ) { }
 
   ngOnInit(): void {
     this.initialisationTable()
@@ -42,6 +44,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
 
   }
 
+  // initialisation de la table des productions
   initialisationTable() {
     this.sub = this._productionService.getAllProduction().subscribe(data => {
       this.lesProductions = data;
@@ -51,6 +54,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
     });
   }
 
+  // permet de calculer le temps de jour restant de consommation (DLC)
   calculerDLC(date: Date): number {
 
     let currentDate = new Date();
@@ -59,11 +63,14 @@ export class CatalogueComponent implements OnInit, OnDestroy {
     return Math.floor((Date.UTC(dateSent.getFullYear(), dateSent.getMonth(), dateSent.getDate()) - Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())) / (1000 * 60 * 60 * 24));
   }
 
+  // déinscription des observables
   ngOnDestroy(): void {
-
     this.dtTrigger.unsubscribe();
     this.sub.unsubscribe();
 
   }
 
+  open() {
+    const modalRef = this.modalService.open(NouvelleProductionComponent);
+  }
 }

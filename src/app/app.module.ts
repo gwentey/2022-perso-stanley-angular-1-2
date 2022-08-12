@@ -40,8 +40,7 @@ import { HistoriquesComponent } from './historiques/historiques.component';
     NouvelleProductionComponent,
     ProfileComponent,
     ReglagesComponent,
-    HistoriquesComponent,
-
+    HistoriquesComponent
   ],
   imports: [
     BrowserModule,
