@@ -84,7 +84,7 @@ export class AuthService {
   }
 
   // met a jour le profil utilisateur
-  public majUser(user : IUser){
+  public majUser(user: IUser) {
     var body = {
       "nom": user.nom,
       "prenom": user.prenom,
@@ -101,7 +101,7 @@ export class AuthService {
   public changePassword(password: string) {
 
     var body = {
-      "password" : password
+      "password": password
     }
 
     return this.http.put<any>(this.API_URL + "me/changepassword", body).pipe(
