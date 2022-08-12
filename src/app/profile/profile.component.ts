@@ -52,19 +52,22 @@ export class ProfileComponent implements OnInit {
     this.profile = this.currentUser.profile
   }
 
+  // permet d'ouvir les modals
   open(content: any) {
-
     this._modalService.open(content)
   }
 
+  // changement de la photo de profil (choix multiple)
   changerProfil(numberProfile: string) {
     this.profile = numberProfile
   }
 
+  // Appel du service navbar pour actualiser les informations
   newCurrentUserSignal(): void {
     this._navbarService.send();
   }
 
+  // Permet de mettre à jour les informations utililisateurs
   majUser() {
     // on verifie le mot de passe
     this._authService.seConnecter(this.currentUser.username, this.motDePasseConfirmeMajProfil).subscribe({
@@ -80,13 +83,19 @@ export class ProfileComponent implements OnInit {
           roles: []
         }
 
+        // envoist des informations user pour changement
         this._authService.majUser(user).subscribe({
           next: () => {
-            // changement du token sur la session
+            // appel de seConnecter afin de récupéré un nouveau token JWT
             this._authService.seConnecter(this.currentUser.username, this.motDePasseConfirmeMajProfil).subscribe({
               next: jwt => {
+                // stockage du token dans le localStorage
                 var jwtFormat = jwt!.token
                 localStorage.setItem('jwt', jwtFormat);
+                // fermeture du modal et reset du form
+                this._modalService.dismissAll()
+                this.motDePasseConfirmeMajProfil = ""
+                // envois d'un signal a la navbar pour refresh les informations
                 this.newCurrentUserSignal()
                 this.toastr.success('Compte mis à jour', '')
               },
@@ -104,6 +113,7 @@ export class ProfileComponent implements OnInit {
 
   }
 
+  // Permet le changement du mot de passe du compte
   changerDeMotDePasseSend() {
 
     if (this.erreurCaractere == false && this.erreurTaille == false) {
@@ -122,13 +132,10 @@ export class ProfileComponent implements OnInit {
     } else {
       this.toastr.error('Une erreur est survenue', '')
     }
-    // rechargement de la page
-    this._router.navigateByUrl('', { skipLocationChange: true }).then(() => {
-      this._router.navigate(['profile']);
-    });
 
   }
 
+  // permet de verifier le nouveau mot de passe (assez long, avec les bons caratères)
   checkPassword() {
 
     this.changerMotDePasse = false
@@ -185,7 +192,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-
+  // permet de verifier la confirmation du nouveau mot de passe (doit correspondre au mot de passe ci dessus)
   confirmPassword() {
     this.changerMotDePasse = false
 

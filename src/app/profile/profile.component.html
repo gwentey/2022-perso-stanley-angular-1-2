@@ -147,7 +147,7 @@
         type="submit"
         class="btn btn-success"
         [ngClass]="{ disabled: changerMotDePasse == false }"
-        (click)="modal.close('Save click')"
+        (click)="modal.close()"
       >
         Valider
       </button>
@@ -157,7 +157,7 @@
 
 <!-- Modification du profil -->
 <ng-template #validationChangement let-modal>
-  <form (ngSubmit)="majUser(); modal.close()">
+  <form (ngSubmit)="majUser();">
 
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Modification du profil</h4>

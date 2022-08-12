@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -9,11 +9,11 @@ import { AuthService } from '../shared/services/auth.service';
   templateUrl: './connexion.component.html',
   styleUrls: ['./connexion.component.scss']
 })
-export class ConnexionComponent implements OnInit {
+export class ConnexionComponent implements OnInit, OnDestroy {
 
   pseudo!: string
   password!: string
-
+  sub : any
 
   constructor(private authService: AuthService, private _router: Router, private toastr: ToastrService) { }
 
@@ -24,7 +24,7 @@ export class ConnexionComponent implements OnInit {
 
   seConnecter() {
 
-    this.authService.seConnecter(this.pseudo, this.password).subscribe({
+    this.sub = this.authService.seConnecter(this.pseudo, this.password).subscribe({
       next: jwt => {
         this.toastr.success('Connecté', '', { timeOut: 1500 })
         var jwtFormat = jwt!.token
@@ -44,5 +44,8 @@ export class ConnexionComponent implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
 
 }

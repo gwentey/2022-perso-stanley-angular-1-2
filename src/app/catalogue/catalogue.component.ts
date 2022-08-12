@@ -19,7 +19,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {}
   lesProductions: IProduction[] = []
   dtTrigger: Subject<any> = new Subject<any>();
-
+  sub : any;
 
   constructor(private _productionService: ProductionService, private _datePipe: DatePipe) { }
 
@@ -43,7 +43,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
   }
 
   initialisationTable() {
-    this._productionService.getAllProduction().subscribe(data => {
+    this.sub = this._productionService.getAllProduction().subscribe(data => {
       this.lesProductions = data;
       console.log(this.lesProductions)
       // Calling the DT trigger to manually render the table
@@ -62,6 +62,8 @@ export class CatalogueComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
 
     this.dtTrigger.unsubscribe();
+    this.sub.unsubscribe();
+
   }
 
 }
