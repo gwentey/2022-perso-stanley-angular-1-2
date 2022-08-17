@@ -1,0 +1,17 @@
+<hr />
+<div class="progress" style="height: 3px">
+  <div
+    class="progress-bar progress-bar-striped progress-bar-animated"
+    role="progressbar"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    [ngClass]="{
+      'niveau-0': step == 0,
+      'niveau-20': step == 1,
+      'niveau-40': step == 2,
+      'niveau-60': step == 3,
+      'niveau-80': step == 4,
+      'niveau-100': step == 5
+    }"
+  ></div>
+</div>

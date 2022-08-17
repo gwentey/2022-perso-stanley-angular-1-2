@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { IUser } from '../interfaces/user';
-import { AuthService } from '../services/auth.service';
-import { NavbarService } from '../services/navbar.service';
+import { IUser } from '../../interfaces/user';
+import { AuthService } from '../../services/auth.service';
+import { NavbarService } from '../../services/navbar.service';
 
 @Component({
   selector: 'app-navbar',

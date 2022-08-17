@@ -13,10 +13,10 @@ import { DatePipe } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AccueilComponent } from './accueil/accueil.component';
-import { HeaderComponent } from './shared/header/header.component';
+import { HeaderComponent } from './shared/partials/header/header.component';
 import { ConnexionComponent } from './connexion/connexion.component';
-import { NavbarComponent } from './shared/navbar/navbar.component';
-import { FooterComponent } from './shared/footer/footer.component';
+import { NavbarComponent } from './shared/partials/navbar/navbar.component';
+import { FooterComponent } from './shared/partials/footer/footer.component';
 import { CatalogueComponent } from './catalogue/catalogue.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { UnloggedGuard } from './shared/guards/unlogged.guard';
@@ -25,6 +25,7 @@ import { TokenInterceptorService } from './shared/interceptor/token-interceptor.
 import { ProfileComponent } from './profile/profile.component';
 import { ReglagesComponent } from './reglages/reglages.component';
 import { HistoriquesComponent } from './historiques/historiques.component';
+import { ProgressBarComponent } from './shared/snippet/progress-bar/progress-bar.component';
 
 
 
@@ -40,7 +41,8 @@ import { HistoriquesComponent } from './historiques/historiques.component';
     NouvelleProductionComponent,
     ProfileComponent,
     ReglagesComponent,
-    HistoriquesComponent
+    HistoriquesComponent,
+    ProgressBarComponent
   ],
   imports: [
     BrowserModule,
