@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { DataTablesModule } from "angular-datatables";
 import { DatePipe } from '@angular/common';
-
+import { TagifyModule } from 'ngx-tagify';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -54,7 +54,8 @@ import { ProgressBarComponent } from './shared/snippet/progress-bar/progress-bar
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     DataTablesModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TagifyModule.forRoot()
 
 
   ],

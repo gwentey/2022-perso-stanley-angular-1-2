@@ -1,7 +1,11 @@
-import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { TagifyService, TagifySettings } from 'ngx-tagify';
+import { BehaviorSubject } from 'rxjs';
+
 import { IAtelier } from '../shared/interfaces/atelier';
 import { IClasse } from '../shared/interfaces/classe';
 import { IFamilleProduit } from '../shared/interfaces/familleProduit';
@@ -13,6 +17,9 @@ import { ClasseService } from '../shared/services/classe.service';
 import { FamilleProduitService } from '../shared/services/famille-produit.service';
 import { ProduitService } from '../shared/services/produit.service';
 import { ProfesseurService } from '../shared/services/professeur.service';
+import { CompositionService } from '../shared/services/composition.service';
+import { IComposition } from '../shared/interfaces/composition';
+import { ThemeService } from 'ng2-charts';
 
 @Component({
   selector: 'app-nouvelle-production',
@@ -26,9 +33,12 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
 
   constructor(public activeModal: NgbActiveModal, private _produitService: ProduitService,
     private _atelierService: AtelierService, private _classeService: ClasseService,
-    private _professeurService: ProfesseurService, private _familleProduit: FamilleProduitService) { }
+    private _professeurService: ProfesseurService, private _familleProduitService: FamilleProduitService,
+    private readonly tagifyService: TagifyService, private _compositionService: CompositionService
+  ) { }
 
-  // 5 steps : 1/ renseignez produits, 2/ (si trouver similaire) est-celui, 3/ (si non) crée produit, 4/(si non) crée produit compistion, 5/ renseigner production, 6/ terminée
+  // 5 steps : 1/ renseignez produits, 2/ (si trouver similaire) est-celui, 3/ (si non) crée produit,
+  // 4/(si non) crée produit compistion, 5/ renseigner production,  6/ renseigner production suite, 7/ terminée
   public step: number = 0
 
   // etape 1
@@ -47,6 +57,15 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
   public listeClasses: IClasse[] = []
   public listeProfesseurs: IProfesseur[] = []
 
+  // etape 4
+  settings: TagifySettings = {
+    placeholder: 'Saisissez la composition du produit',
+    enforceWhitelist: true
+  };
+  public whitelist$ !: BehaviorSubject<string[]>
+  public listeCompositions: IComposition[] = []
+  public listeCompositionsNoms: string[] = []
+
   ngOnInit(): void {
     this._produitService.getAllProduit().subscribe({
       next: lesProduits => {
@@ -57,7 +76,6 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
       },
       error: (err) => console.log("erreur", err)
     })
-
   }
 
   // permet de rechercher autocomplete
@@ -96,10 +114,28 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
         next: uniteeProduits => this.listeUniteeProduits = uniteeProduits
       })
       // récupération de tous les familles produits
-      this._familleProduit.getAllFamilleProduit().subscribe({
+      this._familleProduitService.getAllFamilleProduit().subscribe({
         next: familleProduits => this.listeFamilleProduits = familleProduits
       })
     }
+
+    // etape 4 : création produit composition
+    if (this.step == 4) {
+      // récupération de toutes les compositions
+      this._compositionService.getAllComposition().subscribe({
+        next: compositions => {
+          // on stock toutes les compositions dans le tableau
+          this.listeCompositions = compositions
+          // on ne récupère que le nom des compositions pour le mettre dans un tableau
+          compositions.map(val => this.listeCompositionsNoms.push(val.nom))
+        }
+      })
+      // initialisation de la whitelist tagify
+      this.whitelist$ = new BehaviorSubject<string[]>(this.listeCompositionsNoms);
+
+    }
+
+
   }
 
   // declanchement du level 1 après chargement de la page

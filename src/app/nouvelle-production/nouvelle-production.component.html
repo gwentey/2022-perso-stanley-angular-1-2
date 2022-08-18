@@ -100,6 +100,25 @@
     </strong>
   </div>
 
+  <!-- step 4 -->
+  <div *ngIf="step == 4" class="my-2">
+    <div class="d-flex justify-content-center align-items-center mb-2">
+      <h5>
+        <img src="assets/img/search.png" height="30px" /> Nom du produit
+        <img src="assets/img/search.png" height="30px" />
+      </h5>
+    </div>
+
+    <tagify id="composition" name="composition"
+    [settings]="settings"
+    [whitelist]="whitelist$"
+  >
+</tagify>
+
+
+  </div>
+
+
   <!-- progress bar -->
   <app-progress-bar [step]="step"></app-progress-bar>
 </div>
