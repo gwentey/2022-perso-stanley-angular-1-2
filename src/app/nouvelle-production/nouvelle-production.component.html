@@ -40,32 +40,93 @@
         <span class="text-primary">{{ produitFound.nom }}</span> !</strong
       >
     </p>
-    <p>{{ produitFound.prix }}</p>
+
+    <div class="row">
+      <div class="col-8">
+        <strong
+          >Composition :
+          <div *ngFor="let composition of produitFound.composition">
+            <span class="text-primary">-{{ composition.nom }}</span>
+          </div>
+        </strong>
+      </div>
+
+      <div class="col">
+        <strong
+          >Prix : <span class="text-primary">{{ produitFound.prix }}</span> €
+          /unité
+        </strong>
+      </div>
+    </div>
   </div>
 
+  <!-- step 3 -->
+  <div *ngIf="step == 3" class="my-2">
+    <div class="d-flex justify-content-center align-items-center mb-2">
+      <h5>
+        <img src="assets/img/search.png" height="30px" /> Création d'un produit
+        <img src="assets/img/search.png" height="30px" />
+      </h5>
+    </div>
+
+    <strong>
+      <div class="mb-3">
+        <label for="nomProduit" class="form-label">Nom du produit</label>
+        <input type="text" class="form-control" id="nomProduit" />
+      </div>
+      <hr />
+      <div class="mb-3">
+        <select class="form-select">
+          <option selected>Sélectionner la famille du produit</option>
+          <option
+            *ngFor="let familleProduit of listeFamilleProduits"
+            value="{{ familleProduit.id }}"
+          >
+            {{ familleProduit.nom }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <select class="form-select">
+          <option selected>Sélectionner l'unité de produit</option>
+          <option
+            *ngFor="let uniteeProduit of listeUniteeProduits"
+            value="{{ uniteeProduit.id }}"
+          >
+            {{ uniteeProduit.nom }}
+          </option>
+        </select>
+      </div>
+    </strong>
+  </div>
+
+  <!-- progress bar -->
   <app-progress-bar [step]="step"></app-progress-bar>
 </div>
 <div class="modal-footer">
-
-  <div *ngIf="step == 0 || step == 1">
-  <a
-    (click)="etapeSuivante()"
-    class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">
-    <i class="fas fa-arrow-right fa-sm text-white-50 me-1"> </i>Continuer</a>
+  <div *ngIf="step != 2">
+    <a
+      (click)="etapeSuivante()"
+      class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"
+    >
+      <i class="fas fa-arrow-right fa-sm text-white-50 me-1"> </i>Continuer</a
+    >
   </div>
 
-    <div *ngIf="step == 2">
-      <a
-        (click)="etapeSuivante()"
-        class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm me-2"
-      >
-        <i class="fas fa-check fa-sm text-white-50 me-1"> </i>C'est bien ce produit</a
-      >
-      <a
+  <div *ngIf="step == 2">
+    <a
+      (click)="etapeSuivante(1)"
+      class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm me-2"
+    >
+      <i class="fas fa-check fa-sm text-white-50 me-1"> </i>C'est bien ce
+      produit</a
+    >
+    <a
       (click)="etapeSuivante()"
       class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"
     >
-      <i class="fas fa-xmark fa-sm text-white-50 me-1"> </i>Non, je veux créer un nouveau produit</a
+      <i class="fas fa-xmark fa-sm text-white-50 me-1"> </i>Non, je veux créer
+      un nouveau produit</a
     >
-    </div>
+  </div>
 </div>

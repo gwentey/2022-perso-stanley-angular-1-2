@@ -5,32 +5,25 @@ import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { IProduit } from '../interfaces/produit';
-import { IUniteeProduit } from '../interfaces/uniteeProduit';
+import { IAtelier } from '../interfaces/atelier';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProduitService {
+export class AtelierService {
 
   private readonly API_URL = environment.apiUrl
 
   constructor(private http: HttpClient, private _router: Router) { }
 
   // permet de retourner tout les produits
-  public getAllProduit(): Observable<IProduit[]> {
+  public getAllAtelier(): Observable<IAtelier[]> {
 
-    return this.http.get<IProduit[]>(this.API_URL + "produits").pipe(
+    return this.http.get<IAtelier[]>(this.API_URL + "ateliers").pipe(
       catchError(this.handleError)
     );
   }
-  // permet de retourner toutes les unitées produits
-  public getAllUniteeProduit(): Observable<IUniteeProduit[]> {
 
-    return this.http.get<IUniteeProduit[]>(this.API_URL + "unitee_produits").pipe(
-      catchError(this.handleError)
-    );
-  }
 
 
 

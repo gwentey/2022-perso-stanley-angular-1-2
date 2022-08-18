@@ -5,33 +5,24 @@ import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { IProduit } from '../interfaces/produit';
-import { IUniteeProduit } from '../interfaces/uniteeProduit';
+import { IClasse } from '../interfaces/classe';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProduitService {
+export class ClasseService {
 
   private readonly API_URL = environment.apiUrl
 
   constructor(private http: HttpClient, private _router: Router) { }
 
   // permet de retourner tout les produits
-  public getAllProduit(): Observable<IProduit[]> {
+  public getAllClasse(): Observable<IClasse[]> {
 
-    return this.http.get<IProduit[]>(this.API_URL + "produits").pipe(
+    return this.http.get<IClasse[]>(this.API_URL + "classes").pipe(
       catchError(this.handleError)
     );
   }
-  // permet de retourner toutes les unitées produits
-  public getAllUniteeProduit(): Observable<IUniteeProduit[]> {
-
-    return this.http.get<IUniteeProduit[]>(this.API_URL + "unitee_produits").pipe(
-      catchError(this.handleError)
-    );
-  }
-
 
 
   private handleError(error: HttpErrorResponse) {
