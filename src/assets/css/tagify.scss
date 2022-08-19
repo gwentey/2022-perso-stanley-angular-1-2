@@ -4,6 +4,7 @@
   --tagify-dd-bg-color: white;
   --tagify-dd-item-pad: 0.3em 0.5em;
 }
+
 .tagify {
   --tags-disabled-bg: #f1f1f1;
   --tags-border-color: #ddd;
@@ -15,7 +16,7 @@
   --tag-text-color: black;
   --tag-text-color--edit: black;
   --tag-pad: 0.3em 0.5em;
-  --tag-inset-shadow-size: 1.1em;
+  --tag-inset-shadow-size: 2.1em;
   --tag-invalid-color: #d39494;
   --tag-invalid-bg: rgba(211, 148, 148, 0.5);
   --tag-remove-bg: rgba(211, 148, 148, 0.3);
@@ -41,6 +42,7 @@
   position: relative;
   box-sizing: border-box;
   transition: 0.1s;
+  padding-right: 10px;
 }
 @keyframes tags--bump {
   30% {
@@ -327,7 +329,7 @@
 .tagify__input {
   flex-grow: 1;
   display: inline-block;
-  min-width: 450px;
+  min-width: 46em;
   margin: 5px;
   padding: var(--tag-pad);
   line-height: normal;

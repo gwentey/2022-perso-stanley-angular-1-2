@@ -71,6 +71,6 @@ export class CatalogueComponent implements OnInit, OnDestroy {
   }
 
   open() {
-    const modalRef = this.modalService.open(NouvelleProductionComponent);
+    const modalRef = this.modalService.open(NouvelleProductionComponent, { size: 'lg' });
   }
 }

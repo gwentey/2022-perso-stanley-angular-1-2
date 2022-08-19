@@ -1,3 +1,4 @@
+
 <div class="modal-header">
   <h4 class="modal-title">Ajouter une production</h4>
   <button
@@ -72,7 +73,7 @@
     <strong>
       <div class="mb-3">
         <label for="nomProduit" class="form-label">Nom du produit</label>
-        <input type="text" class="form-control" id="nomProduit" />
+        <input type="text" placeholder="Saisir nom du produit" class="form-control" id="nomProduit" />
       </div>
       <hr />
       <div class="mb-3">
@@ -104,20 +105,148 @@
   <div *ngIf="step == 4" class="my-2">
     <div class="d-flex justify-content-center align-items-center mb-2">
       <h5>
-        <img src="assets/img/search.png" height="30px" /> Nom du produit
+        <img src="assets/img/search.png" height="30px" /> Composition du produit
         <img src="assets/img/search.png" height="30px" />
       </h5>
     </div>
 
-    <tagify id="composition" name="composition"
-    [settings]="settings"
-    [whitelist]="whitelist$"
-  >
-</tagify>
+    <tagify
+      id="composition"
+      name="composition"
+      [settings]="settings"
+      [whitelist]="whitelist$"
+      [(ngModel)]="composition"
+    >
+    </tagify>
+  </div>
 
+
+  <!-- step 5 -->
+  <div *ngIf="step == 5" class="my-2">
+    <div class="d-flex justify-content-center align-items-center mb-2">
+      <h5>
+        <img src="assets/img/search.png" height="30px" /> Composition du produit
+        <img src="assets/img/search.png" height="30px" />
+      </h5>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend w-50">
+        <span class="input-group-text w-100" id="inputGroup-sizing-default">Default</span>
+      </div>
+      <input type="number" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+      <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-default">Default</span>
+    </div>
+
+      <input type="number" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+      <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-default">Default</span>
+    </div>
+
+    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" disabled>
+    <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-default">€</span>
+  </div>
+
+    </div>
 
   </div>
 
+  <!-- step 6 -->
+  <div *ngIf="step == 6" class="my-2">
+    <div class="d-flex justify-content-center align-items-center mb-2">
+      <h5>
+        <img src="assets/img/search.png" height="30px" /> Information production
+        <img src="assets/img/search.png" height="30px" />
+      </h5>
+    </div>
+
+    <strong>
+      <div class="row">
+        <div class="col-7">
+          <div class="mb-3">
+            <label for="nomProduit" class="form-label">Date création</label>
+            <div class="input-group">
+              <input
+                class="form-control"
+                placeholder="dd-mm-YYYY"
+                name="dp"
+                [(ngModel)]="dateFabrication"
+                ngbDatepicker
+                #d="ngbDatepicker"
+              />
+              <button
+                class="btn btn-outline-secondary calendar"
+                (click)="d.toggle()"
+                type="button"
+              ></button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="mb-3">
+            <label for="nomProduit" class="form-label"
+              >Conservation en jour</label
+            >
+            <input type="number" class="form-control" id="nomProduit" />
+          </div>
+        </div>
+      </div>
+
+      <hr />
+      <div class="mb-3">
+        <select class="form-select">
+          <option selected>Sélectionner l'atelier</option>
+          <option
+            *ngFor="let familleProduit of listeFamilleProduits"
+            value="{{ familleProduit.id }}"
+          >
+            {{ familleProduit.nom }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <select class="form-select">
+          <option selected>Sélectionner la classe</option>
+          <option
+            *ngFor="let uniteeProduit of listeUniteeProduits"
+            value="{{ uniteeProduit.id }}"
+          >
+            {{ uniteeProduit.nom }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <select class="form-select">
+          <option selected>Sélectionner le professeur</option>
+          <option
+            *ngFor="let familleProduit of listeFamilleProduits"
+            value="{{ familleProduit.id }}"
+          >
+            {{ familleProduit.nom }}
+          </option>
+        </select>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col">
+          <div class="mb-3">
+            <label for="conditionnement" class="form-label">Conditionnement</label>
+              <input type="number" class="form-control" id="conditionnement" />
+          </div>
+        </div>
+        <div class="col">
+          <div class="mb-3">
+            <label for="quantite" class="form-label"
+              >Quantité</label
+            >
+            <input type="number" class="form-control" id="quantite" />
+          </div>
+        </div>
+      </div>
+    </strong>
+  </div>
 
   <!-- progress bar -->
   <app-progress-bar [step]="step"></app-progress-bar>

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateAdapter, NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
@@ -26,6 +26,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { ReglagesComponent } from './reglages/reglages.component';
 import { HistoriquesComponent } from './historiques/historiques.component';
 import { ProgressBarComponent } from './shared/snippet/progress-bar/progress-bar.component';
+import { CustomAdapterService } from './shared/services/custom/custom-adapter.service';
+import { CustomDateParserFormatterService } from './shared/services/custom/custom-date-parser-formatter.service';
 
 
 
@@ -60,7 +62,10 @@ import { ProgressBarComponent } from './shared/snippet/progress-bar/progress-bar
 
   ],
   providers: [AuthGuard, UnloggedGuard, DatePipe,
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },],
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
+    {provide: NgbDateAdapter, useClass: CustomAdapterService},
+    {provide: NgbDateParserFormatter, useClass: CustomDateParserFormatterService}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

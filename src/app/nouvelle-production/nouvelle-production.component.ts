@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbCalendar, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { TagifyService, TagifySettings } from 'ngx-tagify';
+import { TagifySettings } from 'ngx-tagify';
 import { BehaviorSubject } from 'rxjs';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 import { IAtelier } from '../shared/interfaces/atelier';
 import { IClasse } from '../shared/interfaces/classe';
@@ -19,7 +19,6 @@ import { ProduitService } from '../shared/services/produit.service';
 import { ProfesseurService } from '../shared/services/professeur.service';
 import { CompositionService } from '../shared/services/composition.service';
 import { IComposition } from '../shared/interfaces/composition';
-import { ThemeService } from 'ng2-charts';
 
 @Component({
   selector: 'app-nouvelle-production',
@@ -34,12 +33,13 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
   constructor(public activeModal: NgbActiveModal, private _produitService: ProduitService,
     private _atelierService: AtelierService, private _classeService: ClasseService,
     private _professeurService: ProfesseurService, private _familleProduitService: FamilleProduitService,
-    private readonly tagifyService: TagifyService, private _compositionService: CompositionService
+    private _compositionService: CompositionService, private ngbCalendar: NgbCalendar,
+    private dateAdapter: NgbDateAdapter<string>
   ) { }
 
   // 5 steps : 1/ renseignez produits, 2/ (si trouver similaire) est-celui, 3/ (si non) crée produit,
   // 4/(si non) crée produit compistion, 5/ renseigner production,  6/ renseigner production suite, 7/ terminée
-  public step: number = 0
+  public step: number = 5
 
   // etape 1
   public listeProduits: IProduit[] = []
@@ -65,6 +65,13 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
   public whitelist$ !: BehaviorSubject<string[]>
   public listeCompositions: IComposition[] = []
   public listeCompositionsNoms: string[] = []
+
+  public composition: any[] = []
+
+  // etape 6
+  public dateFabrication: string = this.dateAdapter.toModel(this.ngbCalendar.getToday())!;
+
+
 
   ngOnInit(): void {
     this._produitService.getAllProduit().subscribe({
@@ -135,6 +142,18 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
 
     }
 
+    // etape 5 : création produit composition personnalisation
+    if (this.step == 5) {
+      var compositionChoix : IComposition[] = []
+      this.composition.forEach(compo => {
+          this.listeCompositions.forEach(liste => {
+            if(compo.value == liste.nom){
+              compositionChoix.push(liste)
+            }
+          });
+      });
+      console.log(compositionChoix)
+    }
 
   }
 

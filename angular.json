@@ -4,6 +4,9 @@
   "newProjectRoot": "projects",
   "projects": {
     "stanley": {
+      "i18n": {
+        "sourceLocale": "fr"
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,6 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "localize": ["fr"],
             "outputPath": "dist/stanley",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -86,6 +90,7 @@
             "production": {
               "browserTarget": "stanley:build:production"
             },
+
             "development": {
               "browserTarget": "stanley:build:development"
             }
