@@ -73,7 +73,10 @@
     <strong>
       <div class="mb-3">
         <label for="nomProduit" class="form-label">Nom du produit</label>
-        <input type="text" placeholder="Saisir nom du produit" class="form-control" id="nomProduit" />
+        <input type="text" [(ngModel)]="choixProduit" [ngClass]="{'is-invalid' : alertMessage }" placeholder="Saisir nom du produit" class="form-control" id="nomProduit" />
+        <div class="invalid-feedback">
+          Ce nom de produit ({{ nomProduitInterdit }}) est interdit car il existe déjà dans la base de donnée
+        </div>
       </div>
       <hr />
       <div class="mb-3">
@@ -131,15 +134,15 @@
     </div>
 
     <div *ngFor="let compo of compositionChoix" class="input-group mb-3">
-      <div class="input-group-prepend w-50">
-        <span class="input-group-text w-100" style="font-size: smaller;">{{ compo.nom | truncate:59 }}</span>
+      <div class="input-group-prepend">
+        <span class="input-group-text" style="font-size: smaller; width: 365px;">{{ compo.nom | truncate:59 }}</span>
       </div>
       <input name="qt[]" (change)="calculComposition()" type="number" class="form-control" style="width: 37px;" value="1">
       <div class="input-group-prepend">
       <span class="input-group-text" style="width: 78px">{{ compo.unitee.nom }}</span>
     </div>
 
-      <input name="pu[]" (change)="calculComposition()" type="number" class="form-control" value="{{ compo.prix }}">
+      <input name="pu[]" (change)="calculComposition()" type="number" class="form-control" style="width: 35px;" value="{{ compo.prix }}">
       <div class="input-group-prepend">
       <span class="input-group-text">P.U</span>
     </div>
@@ -193,9 +196,9 @@
         <div class="col">
           <div class="mb-3">
             <label for="nomProduit" class="form-label"
-              >Conservation en jour</label
+              >Durée de conversation en jour</label
             >
-            <input type="number" class="form-control" id="nomProduit" />
+            <input type="number" placeholder="Saisir la durée de conversation" class="form-control" id="nomProduit" />
           </div>
         </div>
       </div>
@@ -239,7 +242,7 @@
         <div class="col">
           <div class="mb-3">
             <label for="conditionnement" class="form-label">Conditionnement</label>
-              <input type="number" class="form-control" id="conditionnement" />
+              <input type="number" placeholder="Saisir le conditionnement" class="form-control" id="conditionnement" />
           </div>
         </div>
         <div class="col">
@@ -247,7 +250,7 @@
             <label for="quantite" class="form-label"
               >Quantité</label
             >
-            <input type="number" class="form-control" id="quantite" />
+            <input type="number" placeholder="Saisir la quantité" class="form-control" id="quantite" />
           </div>
         </div>
       </div>
@@ -269,7 +272,7 @@
 
   <div *ngIf="step == 2">
     <a
-      (click)="etapeSuivante(1)"
+      (click)="etapeSuivante(3)"
       class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm me-2"
     >
       <i class="fas fa-check fa-sm text-white-50 me-1"> </i>C'est bien ce

@@ -39,7 +39,7 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
 
   // 5 steps : 1/ renseignez produits, 2/ (si trouver similaire) est-celui, 3/ (si non) crée produit,
   // 4/(si non) crée produit composition, 5/ composition ajustement,  6/ renseigner production, 7/ terminée
-  public step: number = 3
+  public step: number = 0
 
   // etape 1
   public listeProduits: IProduit[] = []
@@ -48,6 +48,7 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
 
   // etape 2 // produit existant
   public produitFound !: IProduit
+  public nomProduitInterdit !: String
 
   // etape 3 : création produit
   public listeFamilleProduits: IFamilleProduit[] = []
@@ -56,6 +57,7 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
   public listeAteliers: IAtelier[] = []
   public listeClasses: IClasse[] = []
   public listeProfesseurs: IProfesseur[] = []
+  public alertMessage: boolean = false
 
   // etape 4 : composition du produit
   settings: TagifySettings = {
@@ -99,10 +101,11 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
 
   // permet de passer à l'étape suivante
   etapeSuivante(bonus?: number) {
+    console.log(this.choixProduit)
     // etape suivante
     this.step = this.step + 1;
     // bonus ? si oui + bonus
-    if (bonus) { this.step++ }
+    if (bonus) { this.step = this.step + bonus }
 
     // etape 2 le produit existe t'il ??
     if (this.step == 2) {
@@ -110,6 +113,9 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
       if (this.listeProduits.map((prod) => prod.nom).some(x => x == this.choixProduit)) {
         var indexProduit = this.listeProduits.map((prod) => prod.nom).indexOf(this.choixProduit)
         this.produitFound = this.listeProduits[indexProduit]
+        // si le produit existe il est impossible de crée un produit avec un nom similaire
+        this.nomProduitInterdit = this.produitFound.nom
+
         // si pas de produit alors etape suivante
       } else {
         // passage etat 3 : produit existe pas
@@ -127,6 +133,10 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
       this._familleProduitService.getAllFamilleProduit().subscribe({
         next: familleProduits => this.listeFamilleProduits = familleProduits
       })
+
+      if(this.choixProduit == this.nomProduitInterdit){
+        this.alertMessage = true
+      }
     }
 
     // etape 4 : création produit composition
@@ -196,7 +206,7 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
   // declanchement du level 1 après chargement de la page
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.step = 3
+      this.step = 1
     }, 400)
   }
 
