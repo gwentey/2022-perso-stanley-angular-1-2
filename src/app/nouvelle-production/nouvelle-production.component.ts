@@ -38,18 +38,18 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
   ) { }
 
   // 5 steps : 1/ renseignez produits, 2/ (si trouver similaire) est-celui, 3/ (si non) crée produit,
-  // 4/(si non) crée produit compistion, 5/ renseigner production,  6/ renseigner production suite, 7/ terminée
-  public step: number = 5
+  // 4/(si non) crée produit composition, 5/ composition ajustement,  6/ renseigner production, 7/ terminée
+  public step: number = 3
 
   // etape 1
   public listeProduits: IProduit[] = []
   public listeProduitsNoms: string[] = []
   public choixProduit!: string;
 
-  // etape 2
+  // etape 2 // produit existant
   public produitFound !: IProduit
 
-  // etape 3
+  // etape 3 : création produit
   public listeFamilleProduits: IFamilleProduit[] = []
   public listeUniteeProduits: IUniteeProduit[] = []
 
@@ -57,7 +57,7 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
   public listeClasses: IClasse[] = []
   public listeProfesseurs: IProfesseur[] = []
 
-  // etape 4
+  // etape 4 : composition du produit
   settings: TagifySettings = {
     placeholder: 'Saisissez la composition du produit',
     enforceWhitelist: true
@@ -68,7 +68,10 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
 
   public composition: any[] = []
 
-  // etape 6
+  // epta 5 : composition produit ajustement
+  public compositionChoix: IComposition[] = []
+
+  // etape 6 : production renseignement
   public dateFabrication: string = this.dateAdapter.toModel(this.ngbCalendar.getToday())!;
 
 
@@ -144,23 +147,56 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
 
     // etape 5 : création produit composition personnalisation
     if (this.step == 5) {
-      var compositionChoix : IComposition[] = []
       this.composition.forEach(compo => {
-          this.listeCompositions.forEach(liste => {
-            if(compo.value == liste.nom){
-              compositionChoix.push(liste)
-            }
-          });
+        this.listeCompositions.forEach(liste => {
+          if (compo.value == liste.nom) {
+            this.compositionChoix.push(liste)
+          }
+        });
       });
-      console.log(compositionChoix)
+      setTimeout(() => {
+        this.calculComposition()
+      }, 0)
+
+
     }
+
+
+
+  }
+
+// permet de calculer dynamiquement les champs des compositions
+  calculComposition() {
+    var nbligne = document.getElementsByName('qt[]').length;
+    var prixtotalcomposition = (document.getElementById("prixtotal") as HTMLInputElement);
+    var tt = 0
+
+    for (let i = 0; i < nbligne; i++) {
+      var letotal = 0;
+
+      var qt = (document.getElementsByName('qt[]')[i] as HTMLInputElement).value;
+      var pu = (document.getElementsByName('pu[]')[i] as HTMLInputElement).value;
+      var prixProduit = (document.getElementsByName('prix[]')[i] as HTMLInputElement);
+
+      //si pas de quantité on ne fait pas de calcul
+      if (qt == "") {
+        prixProduit.value = "";
+        continue; // on passe au suivant
+      }
+
+      letotal = letotal + ((Number(qt) * 10 * Number(pu) * 10) / 100);
+      tt = tt + letotal;
+
+      prixProduit.value = String((Math.round(letotal * 100) / 100).toFixed(2));
+    }
+    prixtotalcomposition.value = String((Math.round(tt * 100) / 100).toFixed(2));
 
   }
 
   // declanchement du level 1 après chargement de la page
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.step = 1
+      this.step = 3
     }, 400)
   }
 

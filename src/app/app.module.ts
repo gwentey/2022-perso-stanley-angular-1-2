@@ -28,7 +28,7 @@ import { HistoriquesComponent } from './historiques/historiques.component';
 import { ProgressBarComponent } from './shared/snippet/progress-bar/progress-bar.component';
 import { CustomAdapterService } from './shared/services/custom/custom-adapter.service';
 import { CustomDateParserFormatterService } from './shared/services/custom/custom-date-parser-formatter.service';
-
+import { TruncatePipe } from './shared/services/pipes/truncate-pipe.service';
 
 
 @NgModule({
@@ -44,7 +44,8 @@ import { CustomDateParserFormatterService } from './shared/services/custom/custo
     ProfileComponent,
     ReglagesComponent,
     HistoriquesComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    TruncatePipe
   ],
   imports: [
     BrowserModule,
