@@ -19,6 +19,7 @@ import { ProduitService } from '../shared/services/produit.service';
 import { ProfesseurService } from '../shared/services/professeur.service';
 import { CompositionService } from '../shared/services/composition.service';
 import { IComposition } from '../shared/interfaces/composition';
+import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-nouvelle-production',
@@ -28,14 +29,6 @@ import { IComposition } from '../shared/interfaces/composition';
 
 
 export class NouvelleProductionComponent implements OnInit, AfterViewInit {
-
-
-  constructor(public activeModal: NgbActiveModal, private _produitService: ProduitService,
-    private _atelierService: AtelierService, private _classeService: ClasseService,
-    private _professeurService: ProfesseurService, private _familleProduitService: FamilleProduitService,
-    private _compositionService: CompositionService, private ngbCalendar: NgbCalendar,
-    private dateAdapter: NgbDateAdapter<string>
-  ) { }
 
   // 5 steps : 1/ renseignez produits, 2/ (si trouver similaire) est-celui, 3/ (si non) crée produit,
   // 4/(si non) crée produit composition, 5/ composition ajustement,  6/ renseigner production, 7/ terminée
@@ -75,6 +68,15 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
 
   // etape 6 : production renseignement
   public dateFabrication: string = this.dateAdapter.toModel(this.ngbCalendar.getToday())!;
+
+  public creationProduitForm !: FormGroup
+
+  constructor(public activeModal: NgbActiveModal, private _produitService: ProduitService,
+    private _atelierService: AtelierService, private _classeService: ClasseService,
+    private _professeurService: ProfesseurService, private _familleProduitService: FamilleProduitService,
+    private _compositionService: CompositionService, private ngbCalendar: NgbCalendar,
+    private dateAdapter: NgbDateAdapter<string>, private fb: FormBuilder
+  ) { }
 
 
 
@@ -129,14 +131,28 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
       this._produitService.getAllUniteeProduit().subscribe({
         next: uniteeProduits => this.listeUniteeProduits = uniteeProduits
       })
+
       // récupération de tous les familles produits
       this._familleProduitService.getAllFamilleProduit().subscribe({
         next: familleProduits => this.listeFamilleProduits = familleProduits
       })
 
-      if(this.choixProduit == this.nomProduitInterdit){
+      if (this.choixProduit == this.nomProduitInterdit) {
         this.alertMessage = true
       }
+
+      // création du formulaire
+      this.creationProduitForm = this.fb.group({
+        nomProduit: ['', Validators.required],
+        familleProduit: ['', Validators.required],
+        uniteeProduit: ['', Validators.required]
+      });
+
+      this.creationProduitForm.controls['uniteeProduit'].setValue(-1, {onlySelf: true});
+      this.creationProduitForm.controls['familleProduit'].setValue(-1, {onlySelf: true});
+
+
+
     }
 
     // etape 4 : création produit composition
@@ -175,7 +191,7 @@ export class NouvelleProductionComponent implements OnInit, AfterViewInit {
 
   }
 
-// permet de calculer dynamiquement les champs des compositions
+  // permet de calculer dynamiquement les champs des compositions
   calculComposition() {
     var nbligne = document.getElementsByName('qt[]').length;
     var prixtotalcomposition = (document.getElementById("prixtotal") as HTMLInputElement);

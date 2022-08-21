@@ -29,6 +29,13 @@ import { ProgressBarComponent } from './shared/snippet/progress-bar/progress-bar
 import { CustomAdapterService } from './shared/services/custom/custom-adapter.service';
 import { CustomDateParserFormatterService } from './shared/services/custom/custom-date-parser-formatter.service';
 import { TruncatePipe } from './shared/services/pipes/truncate-pipe.service';
+import { Etape1RenseignezproduitComponent } from './nouvelle-production/etape1-renseignezproduit/etape1-renseignezproduit.component';
+import { Etape2ProduitSimilaireComponent } from './nouvelle-production/etape2-produit-similaire/etape2-produit-similaire.component';
+import { Etape3CreationProduitComponent } from './nouvelle-production/etape3-creation-produit/etape3-creation-produit.component';
+import { Etape4CompositionComponent } from './nouvelle-production/etape4-composition/etape4-composition.component';
+import { Etape5CompositionAjustementComponent } from './nouvelle-production/etape5-composition-ajustement/etape5-composition-ajustement.component';
+import { Etape6ProductionComponent } from './nouvelle-production/etape6-production/etape6-production.component';
+import { Etape7TermineeComponent } from './nouvelle-production/etape7-terminee/etape7-terminee.component';
 
 
 @NgModule({
@@ -45,7 +52,14 @@ import { TruncatePipe } from './shared/services/pipes/truncate-pipe.service';
     ReglagesComponent,
     HistoriquesComponent,
     ProgressBarComponent,
-    TruncatePipe
+    TruncatePipe,
+    Etape1RenseignezproduitComponent,
+    Etape2ProduitSimilaireComponent,
+    Etape3CreationProduitComponent,
+    Etape4CompositionComponent,
+    Etape5CompositionAjustementComponent,
+    Etape6ProductionComponent,
+    Etape7TermineeComponent
   ],
   imports: [
     BrowserModule,
