@@ -1,1 +1,82 @@
-<p>etape3-creation-produit works!</p>
+<div class="modal-header">
+  <h4 class="modal-title">Ajouter une production</h4>
+  <button
+    (click)="activeModal.dismiss()"
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+  ></button>
+</div>
+<div class="modal-body">
+  <!-- step 3 -->
+  <div class="d-flex justify-content-center align-items-center mb-2">
+    <h5>
+      <img src="assets/img/search.png" height="30px" /> Création d'un produit
+      <img src="assets/img/search.png" height="30px" />
+    </h5>
+  </div>
+
+  <strong>
+    <form novalidate [formGroup]="creationProduitForm">
+      <div class="mb-3">
+        <label for="nomProduit" class="form-label">Nom du produit</label>
+        <input
+          type="text"
+          formControlName="nomProduit"
+          [(ngModel)]="choixProduit"
+          [ngClass]="{ 'is-invalid': alertMessage }"
+          placeholder="Saisir nom du produit"
+          class="form-control"
+          id="nomProduit"
+        />
+        <div class="invalid-feedback">
+          Ce nom de produit ({{ nomProduitInterdit }}) est interdit car il
+          existe déjà dans la base de donnée
+        </div>
+      </div>
+      <hr />
+      <div class="mb-3">
+        <select
+          formControlName="familleProduit"
+          class="form-select"
+          id="familleProduit"
+        >
+          <option value="-1" selected>
+            Sélectionner la famille du produit
+          </option>
+          <option
+            *ngFor="let familleProduit of listeFamilleProduits"
+            value="{{ familleProduit.id }}"
+          >
+            {{ familleProduit.nom }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <select
+          placeholder="Select price"
+          formControlName="uniteeProduit"
+          class="form-select"
+          id="uniteeProduit"
+        >
+          <option value="-1">Sélectionner l'unitée du produit</option>
+          <option
+            *ngFor="let uniteeProduit of listeUniteeProduits"
+            value="{{ uniteeProduit.id }}"
+          >
+            {{ uniteeProduit.nom }}
+          </option>
+        </select>
+      </div>
+    </form>
+    <pre></pre>
+  </strong>
+
+  <!-- progress bar -->
+  <app-progress-bar [step]="3"></app-progress-bar>
+</div>
+<div class="modal-footer">
+  <a class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">
+    <i class="fas fa-arrow-right fa-sm text-white-50 me-1"> </i>Continuer</a
+  >
+</div>

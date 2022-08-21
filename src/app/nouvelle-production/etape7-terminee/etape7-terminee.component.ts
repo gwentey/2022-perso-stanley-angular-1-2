@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbActiveModal, NgbCalendar, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-etape7-terminee',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Etape7TermineeComponent implements OnInit {
 
-  constructor() { }
+  constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
   }

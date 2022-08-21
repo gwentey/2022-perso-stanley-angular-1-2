@@ -1,1 +1,113 @@
-<p>etape6-production works!</p>
+<div class="modal-header">
+  <h4 class="modal-title">Ajouter une production</h4>
+  <button
+    (click)="activeModal.dismiss()"
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+  ></button>
+</div>
+<div class="modal-body">
+  <!-- step 6 -->
+  <div class="my-2">
+    <div class="d-flex justify-content-center align-items-center mb-2">
+      <h5>
+        <img src="assets/img/search.png" height="30px" /> Information production
+        <img src="assets/img/search.png" height="30px" />
+      </h5>
+    </div>
+
+    <strong>
+      <div class="row">
+        <div class="col-7">
+          <div class="mb-3">
+            <label for="nomProduit" class="form-label">Date création</label>
+            <div class="input-group">
+              <input
+                class="form-control"
+                placeholder="dd-mm-YYYY"
+                name="dp"
+                [(ngModel)]="dateFabrication"
+                ngbDatepicker
+                #d="ngbDatepicker"
+              />
+              <button
+                class="btn btn-outline-secondary calendar"
+                (click)="d.toggle()"
+                type="button"
+              ></button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="mb-3">
+            <label for="nomProduit" class="form-label"
+              >Durée de conversation en jour</label
+            >
+            <input
+              type="number"
+              placeholder="Saisir la durée de conversation"
+              class="form-control"
+              id="nomProduit"
+            />
+          </div>
+        </div>
+      </div>
+
+      <hr />
+      <div class="mb-3">
+        <select class="form-select">
+          <option selected>Sélectionner l'atelier</option>
+          <option></option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <select class="form-select">
+          <option selected>Sélectionner la classe</option>
+          <option></option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <select class="form-select">
+          <option selected>Sélectionner le professeur</option>
+          <option></option>
+        </select>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col">
+          <div class="mb-3">
+            <label for="conditionnement" class="form-label"
+              >Conditionnement</label
+            >
+            <input
+              type="number"
+              placeholder="Saisir le conditionnement"
+              class="form-control"
+              id="conditionnement"
+            />
+          </div>
+        </div>
+        <div class="col">
+          <div class="mb-3">
+            <label for="quantite" class="form-label">Quantité</label>
+            <input
+              type="number"
+              placeholder="Saisir la quantité"
+              class="form-control"
+              id="quantite"
+            />
+          </div>
+        </div>
+      </div>
+    </strong>
+  </div>
+
+  <!-- progress bar -->
+  <app-progress-bar [step]="6"></app-progress-bar>
+</div>
+<div class="modal-footer">
+  <a class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">
+    <i class="fas fa-arrow-right fa-sm text-white-50 me-1"> </i>Continuer</a
+  >
+</div>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbActiveModal, NgbCalendar, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-etape6-production',
@@ -7,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Etape6ProductionComponent implements OnInit {
 
-  constructor() { }
+  public dateFabrication: string = this.dateAdapter.toModel(this.ngbCalendar.getToday())!;
+
+  constructor(public activeModal: NgbActiveModal, private ngbCalendar: NgbCalendar,
+    private dateAdapter: NgbDateAdapter<string>) { }
 
   ngOnInit(): void {
   }

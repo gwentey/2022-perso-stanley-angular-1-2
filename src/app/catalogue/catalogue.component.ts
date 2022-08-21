@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 
 import * as traductionTableFrancais from '../../assets/traduction_table.json';
 import { Etape1RenseignezproduitComponent } from '../nouvelle-production/etape1-renseignezproduit/etape1-renseignezproduit.component';
+import { Etape2ProduitSimilaireComponent } from '../nouvelle-production/etape2-produit-similaire/etape2-produit-similaire.component';
 import { NouvelleProductionComponent } from '../nouvelle-production/nouvelle-production.component';
 import { IProduction } from '../shared/interfaces/production';
 import { ProductionService } from '../shared/services/production.service';
@@ -72,6 +73,6 @@ export class CatalogueComponent implements OnInit, OnDestroy {
   }
 
   open() {
-    const modalRef = this.modalService.open(Etape1RenseignezproduitComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(Etape2ProduitSimilaireComponent, { size: 'lg' });
   }
 }

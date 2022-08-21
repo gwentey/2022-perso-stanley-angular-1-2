@@ -1,1 +1,51 @@
-<p>etape2-produit-similaire works!</p>
+<div class="modal-header">
+  <h4 class="modal-title">Ajouter une production</h4>
+  <button
+    (click)="activeModal.dismiss()"
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+  ></button>
+</div>
+<div class="modal-body">
+  <div class="d-flex justify-content-center align-items-center mb-2">
+    <h5>
+      <img src="assets/img/cook.png" height="30px" /> Un produit a été trouvé
+      <img src="assets/img/cook.png" height="30px" />
+    </h5>
+  </div>
+  <p>
+    <strong
+      >Un produit similaire a été trouvé :
+      <span class="text-primary">{{ produitFound.nom }}</span> !</strong
+    >
+  </p>
+
+  <div class="row">
+    <div class="col-8">
+      <strong
+        >Composition :
+        <div *ngFor="let composition of produitFound.composition">
+          <span class="text-primary">-{{ composition.nom }}</span>
+        </div>
+      </strong>
+    </div>
+
+    <div class="col">
+      <strong
+        >Prix : <span class="text-primary">{{ produitFound.prix }}</span> €
+        /unité
+      </strong>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <a class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm me-2">
+    <i class="fas fa-check fa-sm text-white-50 me-1"> </i>C'est bien ce
+    produit</a
+  >
+  <a class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm">
+    <i class="fas fa-xmark fa-sm text-white-50 me-1"> </i>Non, je veux créer un
+    nouveau produit</a
+  >
+</div>
