@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
 import * as traductionTableFrancais from '../../assets/traduction_table.json';
+import { Etape1RenseignezproduitComponent } from '../nouvelle-production/etape1-renseignezproduit/etape1-renseignezproduit.component';
 import { NouvelleProductionComponent } from '../nouvelle-production/nouvelle-production.component';
 import { IProduction } from '../shared/interfaces/production';
 import { ProductionService } from '../shared/services/production.service';
@@ -71,6 +72,6 @@ export class CatalogueComponent implements OnInit, OnDestroy {
   }
 
   open() {
-    const modalRef = this.modalService.open(NouvelleProductionComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(Etape1RenseignezproduitComponent, { size: 'lg' });
   }
 }
